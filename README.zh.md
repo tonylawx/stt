@@ -2,7 +2,7 @@
 
 > [English](README.md)
 
-一个完全离线的语音转文字工具。将视频文件（`.mp4`、`.mov` 等）转为 `.srt` 字幕和 `.txt` 纯文本。基于 `faster-whisper` + `ctranslate2`，模型首次下载后无需网络。
+**STT** 即 **S**peech **t**o **T**ext（语音转文字）。一个完全离线的语音转文字工具。将视频文件（`.mp4`、`.mov` 等）转为 `.srt` 字幕和 `.txt` 纯文本。基于 `faster-whisper` + `ctranslate2`，模型首次下载后无需网络。
 
 ## 快速开始
 

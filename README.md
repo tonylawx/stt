@@ -2,7 +2,7 @@
 
 > [中文文档](README.zh.md)
 
-A local, offline speech-to-text tool that transcribes video files (`.mp4`, `.mov`, etc.) into `.srt` subtitle and `.txt` plain-text files. Uses `faster-whisper` with `ctranslate2` under the hood  --  no network required after the first model download.
+**STT** stands for **S**peech **t**o **T**ext. A local, offline speech-to-text tool that transcribes video files (`.mp4`, `.mov`, etc.) into `.srt` subtitle and `.txt` plain-text files. Uses `faster-whisper` with `ctranslate2` under the hood  --  no network required after the first model download.
 
 ## Quick Start
 
