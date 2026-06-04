@@ -2,7 +2,7 @@
 
 > [中文文档](README.zh.md)
 
-A local, offline speech-to-text tool that transcribes video files (`.mp4`, `.mov`, etc.) into `.srt` subtitle and `.txt` plain-text files. Uses `faster-whisper` with `ctranslate2` under the hood — no network required after the first model download.
+A local, offline speech-to-text tool that transcribes video files (`.mp4`, `.mov`, etc.) into `.srt` subtitle and `.txt` plain-text files. Uses `faster-whisper` with `ctranslate2` under the hood  --  no network required after the first model download.
 
 ## Quick Start
 
@@ -14,14 +14,14 @@ Download the archive for your platform from [GitHub Releases](https://github.com
 
 ```bash
 # Download and extract
-tar -xzf stt-macos-arm64.tar.gz        # Apple Silicon — or stt-macos-x86_64 / stt-linux-x86_64
+tar -xzf stt-macos-arm64.tar.gz        # Apple Silicon  --  or stt-macos-x86_64 / stt-linux-x86_64
 
 # Install to PATH
 sudo cp stt /usr/local/bin/
 # or, without sudo:
 mkdir -p ~/.local/bin && cp stt ~/.local/bin/
 
-# Ready to use — anywhere
+# Ready to use  --  anywhere
 stt /path/to/video.mp4
 ```
 
@@ -36,7 +36,7 @@ cp stt.exe C:\Windows\System32\
 .\stt.exe C:\path\to\video.mp4
 ```
 
-The binary bundles everything — no Python, no pip, no venv. The Whisper model is downloaded automatically on first run.
+The binary bundles everything  --  no Python, no pip, no venv. The Whisper model is downloaded automatically on first run.
 
 ### From source (pip)
 
@@ -98,7 +98,7 @@ python transcribe.py /path/to/video.mp4 [options]
 
 - `turbo` is the default and maps to `large-v3-turbo`. It offers a strong accuracy/speed balance.
 - On first use the model weights are downloaded automatically. This can take a few minutes.
-- If your machine lacks a GPU the tool still works — it will run entirely on CPU.
+- If your machine lacks a GPU the tool still works  --  it will run entirely on CPU.
 
 ### Apple Silicon (M1 / M2 / M3 / M4)
 
@@ -110,7 +110,7 @@ stt /path/to/video.mp4 --cpu-threads 8
 
 ### Without a GPU
 
-The tool works fine CPU-only — it is just slower. The `base` or `small` models can help if `turbo` feels too heavy.
+The tool works fine CPU-only  --  it is just slower. The `base` or `small` models can help if `turbo` feels too heavy.
 
 ## Common Examples
 
