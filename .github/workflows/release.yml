@@ -39,18 +39,32 @@ jobs:
       - name: Build standalone binary
         shell: bash
         run: |
-          pyinstaller --onefile --name "${{ matrix.artifact }}" \
+          pyinstaller --onefile --name stt \
             --collect-all faster_whisper \
             --collect-all ctranslate2 \
             --collect-all tqdm \
             transcribe.py
           echo "Built: $(ls -lh dist/)"
 
+      - name: Package binary
+        shell: bash
+        run: |
+          ARCHIVE="${{ matrix.artifact }}.tar.gz"
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            ARCHIVE="${{ matrix.artifact }}.zip"
+            mv dist/stt.exe stt.exe
+            zip "$ARCHIVE" stt.exe
+          else
+            tar -czf "$ARCHIVE" -C dist stt
+          fi
+          echo "Packaged: $(ls -lh "$ARCHIVE")"
+          echo "archive=$ARCHIVE" >> "$GITHUB_ENV"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
-          path: dist/${{ matrix.artifact }}*
+          path: ${{ env.archive }}
 
   release:
     needs: build
@@ -66,7 +80,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}
-          files: stt-*/stt-*
+          files: stt-*/stt-*.*
           generate_release_notes: true
           draft: false
           prerelease: false

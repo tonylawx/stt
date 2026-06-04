@@ -8,17 +8,32 @@ A local, offline speech-to-text tool that transcribes video files (`.mp4`, `.mov
 
 ### Pre-built binary (no Python required)
 
-Grab the standalone binary for your platform from [GitHub Releases](https://github.com/tonylawx/stt/releases), then:
+Download the archive for your platform from [GitHub Releases](https://github.com/tonylawx/stt/releases), extract it, and install the `stt` binary:
+
+**macOS / Linux**
 
 ```bash
-# macOS / Linux
-chmod +x ./stt-macos-arm64      # or stt-macos-x86_64 / stt-linux-x86_64
-./stt-macos-arm64 /path/to/video.mp4
+# Download and extract
+tar -xzf stt-macos-arm64.tar.gz        # Apple Silicon — or stt-macos-x86_64 / stt-linux-x86_64
+
+# Install to PATH
+sudo cp stt /usr/local/bin/
+# or, without sudo:
+mkdir -p ~/.local/bin && cp stt ~/.local/bin/
+
+# Ready to use — anywhere
+stt /path/to/video.mp4
 ```
 
+**Windows (PowerShell)**
+
 ```powershell
-# Windows (PowerShell)
-.\stt-windows-x86_64.exe C:\path	oideo.mp4
+# Download and extract stt-windows-x86_64.zip
+Expand-Archive stt-windows-x86_64.zip -DestinationPath .
+# Copy to a directory in your PATH, e.g.:
+cp stt.exe C:\Windows\System32\
+# or add the current directory to PATH and use:
+.\stt.exe C:\path\to\video.mp4
 ```
 
 The binary bundles everything — no Python, no pip, no venv. The Whisper model is downloaded automatically on first run.
@@ -63,8 +78,8 @@ Dependencies are listed in `requirements.txt`:
 ## Usage
 
 ```bash
-# Pre-built binary
-./stt-<platform> /path/to/video.mp4 [options]
+# If installed via binary
+stt /path/to/video.mp4 [options]
 
 # From source
 python transcribe.py /path/to/video.mp4 [options]
@@ -87,11 +102,10 @@ python transcribe.py /path/to/video.mp4 [options]
 
 ### Apple Silicon (M1 / M2 / M3 / M4)
 
-On Apple Silicon Macs pick `stt-macos-arm64` from Releases. The tool defaults to CPU + `int8` quantized inference with automatic thread tuning. The launcher scripts (`stt` and `transcribe.command`) force `arm64` so you never accidentally launch under Rosetta.
+On Apple Silicon Macs pick `stt-macos-arm64.tar.gz` from Releases. The tool defaults to CPU + `int8` quantized inference with automatic thread tuning.
 
 ```bash
-# Manual thread override if needed
-./stt-macos-arm64 /path/to/video.mp4 --cpu-threads 8
+stt /path/to/video.mp4 --cpu-threads 8
 ```
 
 ### Without a GPU
@@ -103,25 +117,25 @@ The tool works fine CPU-only — it is just slower. The `base` or `small` models
 Auto-detect language:
 
 ```bash
-./stt-<platform> /path/to/video.mp4
+stt /path/to/video.mp4
 ```
 
 Force a language:
 
 ```bash
-./stt-<platform> /path/to/video.mp4 --language zh
+stt /path/to/video.mp4 --language zh
 ```
 
 Choose a smaller model:
 
 ```bash
-./stt-<platform> /path/to/video.mp4 --model base
+stt /path/to/video.mp4 --model base
 ```
 
 Write output to a different directory:
 
 ```bash
-./stt-<platform> /path/to/video.mp4 --output-dir /path/to/output
+stt /path/to/video.mp4 --output-dir /path/to/output
 ```
 
 ## License

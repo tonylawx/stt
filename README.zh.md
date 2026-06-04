@@ -8,17 +8,32 @@
 
 ### 预编译二进制（无需安装 Python）
 
-从 [GitHub Releases](https://github.com/tonylawx/stt/releases) 下载对应平台的独立可执行文件，然后：
+从 [GitHub Releases](https://github.com/tonylawx/stt/releases) 下载对应平台的压缩包，解压后把 `stt` 放到 PATH 里即可全局使用：
+
+**macOS / Linux**
 
 ```bash
-# macOS / Linux
-chmod +x ./stt-macos-arm64      # 或 stt-macos-x86_64 / stt-linux-x86_64
-./stt-macos-arm64 /absolute/path/to/video.mp4
+# 下载并解压
+tar -xzf stt-macos-arm64.tar.gz        # Apple Silicon — 或 stt-macos-x86_64 / stt-linux-x86_64
+
+# 安装到 PATH
+sudo cp stt /usr/local/bin/
+# 或者不用 sudo：
+mkdir -p ~/.local/bin && cp stt ~/.local/bin/
+
+# 安装完成，任意目录使用
+stt /absolute/path/to/video.mp4
 ```
 
+**Windows (PowerShell)**
+
 ```powershell
-# Windows (PowerShell)
-.\stt-windows-x86_64.exe C:\path	oideo.mp4
+# 下载并解压 stt-windows-x86_64.zip
+Expand-Archive stt-windows-x86_64.zip -DestinationPath .
+# 复制到 PATH 中的目录，例如：
+cp stt.exe C:\Windows\System32\
+# 或将当前目录加入 PATH 后直接使用：
+.\stt.exe C:\path\to\video.mp4
 ```
 
 二进制文件自带所有依赖，无需安装 Python、pip 或虚拟环境。首次运行时会自动下载 Whisper 模型。
@@ -63,8 +78,8 @@ python transcribe.py /absolute/path/to/video.mp4
 ## 使用方式
 
 ```bash
-# 预编译二进制
-./stt-<平台> /absolute/path/to/video.mp4 [选项]
+# 二进制安装后
+stt /absolute/path/to/video.mp4 [选项]
 
 # 从源码
 python transcribe.py /absolute/path/to/video.mp4 [选项]
@@ -87,11 +102,10 @@ python transcribe.py /absolute/path/to/video.mp4 [选项]
 
 ### Apple Silicon (M1 / M2 / M3 / M4)
 
-Apple Silicon Mac 请下载 `stt-macos-arm64`。默认使用 CPU + `int8` 量化推理，并自动调节线程数。启动脚本（`stt` 和 `transcribe.command`）会强制走 `arm64`，不会意外跑在 Rosetta 下。
+Apple Silicon Mac 请下载 `stt-macos-arm64.tar.gz`。默认使用 CPU + `int8` 量化推理，并自动调节线程数。
 
 ```bash
-# 如需手动指定线程数
-./stt-macos-arm64 /absolute/path/to/video.mp4 --cpu-threads 8
+stt /absolute/path/to/video.mp4 --cpu-threads 8
 ```
 
 ### 纯 CPU 环境
@@ -103,25 +117,25 @@ Apple Silicon Mac 请下载 `stt-macos-arm64`。默认使用 CPU + `int8` 量化
 自动检测语言：
 
 ```bash
-./stt-<平台> /absolute/path/to/video.mp4
+stt /absolute/path/to/video.mp4
 ```
 
 强制指定语言：
 
 ```bash
-./stt-<平台> /absolute/path/to/video.mp4 --language zh
+stt /absolute/path/to/video.mp4 --language zh
 ```
 
 选择更小的模型：
 
 ```bash
-./stt-<平台> /absolute/path/to/video.mp4 --model base
+stt /absolute/path/to/video.mp4 --model base
 ```
 
 指定输出目录：
 
 ```bash
-./stt-<平台> /absolute/path/to/video.mp4 --output-dir /path/to/output
+stt /absolute/path/to/video.mp4 --output-dir /path/to/output
 ```
 
 ## License
