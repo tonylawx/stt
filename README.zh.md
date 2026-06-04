@@ -33,7 +33,7 @@ Expand-Archive stt-windows-x86_64.zip -DestinationPath .
 # 复制到 PATH 中的目录，例如：
 cp stt.exe C:\Windows\System32\
 # 或将当前目录加入 PATH 后直接使用：
-.\stt.exe C:\path\to\video.mp4
+.\stt.exe C:\videos\example.mp4
 ```
 
 二进制文件自带所有依赖，无需安装 Python、pip 或虚拟环境。首次运行时会自动下载 Whisper 模型。
@@ -137,6 +137,34 @@ stt /absolute/path/to/video.mp4 --model base
 ```bash
 stt /absolute/path/to/video.mp4 --output-dir /path/to/output
 ```
+
+## 进阶：LLM 校准 & 双语字幕
+
+STT 生成 `.srt` 字幕后，丢给大模型（ChatGPT、Claude、DeepSeek 等）就能一条龙完成校准和翻译，输出标准双语字幕。自己转录、自己校准、自己翻译，从此告别字幕下载网站。
+
+**三步走：**
+
+1. **校准** — 大模型结合上下文修正语音识别的错词和断句问题
+2. **翻译** — 逐句翻译为中文（或其他目标语言）
+3. **输出双语 SRT** — 保持原始时间轴，原文和译文交替排列
+
+把下面这段 prompt 和你的 `.srt` 内容一起发给大模型即可：
+
+```
+你是一个专业的字幕校对和翻译助手。请处理以下 SRT 字幕，保持时间轴不变：
+
+1. 结合上下文修正所有识别错误（专有名词、断句、同音词）
+2. 将英文逐句翻译为简体中文，放在对应原文的下方
+3. 用标准 SRT 格式输出，翻译行与原文行交替排列
+
+以下是字幕内容：
+
+[在此粘贴 .srt 文件内容]
+```
+
+> 提示：如果字幕较长，可以分段发送，每段 50-100 条即可。ChatGPT、Claude、DeepSeek 等模型都能胜任。
+
+
 
 ## License
 

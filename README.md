@@ -33,7 +33,7 @@ Expand-Archive stt-windows-x86_64.zip -DestinationPath .
 # Copy to a directory in your PATH, e.g.:
 cp stt.exe C:\Windows\System32\
 # or add the current directory to PATH and use:
-.\stt.exe C:\path\to\video.mp4
+.\stt.exe C:\videos\example.mp4
 ```
 
 The binary bundles everything  --  no Python, no pip, no venv. The Whisper model is downloaded automatically on first run.
@@ -137,6 +137,34 @@ Write output to a different directory:
 ```bash
 stt /path/to/video.mp4 --output-dir /path/to/output
 ```
+
+## Advanced: LLM Calibration & Bilingual Subtitles
+
+Once STT generates an `.srt` file, feed it to an LLM (ChatGPT, Claude, DeepSeek, etc.) to calibrate, translate, and produce polished bilingual subtitles — no subtitle download sites needed.
+
+**Three steps:**
+
+1. **Calibrate** — the LLM fixes transcription errors (proper nouns, homophones, sentence breaks) using context
+2. **Translate** — line-by-line translation into your target language
+3. **Output bilingual SRT** — original timestamps preserved, source and translation interleaved
+
+Send this prompt together with your `.srt` content to any LLM:
+
+```
+You are a professional subtitle proofreader and translator. Process the following SRT subtitles while preserving all timestamps:
+
+1. Fix all transcription errors using context (proper nouns, homophones, sentence breaks)
+2. Translate each line into Simplified Chinese, placing it directly below the original
+3. Output in standard SRT format with translation lines interleaved between original lines
+
+Subtitle content:
+
+[Paste .srt content here]
+```
+
+> Tip: For long subtitles, send in chunks of 50–100 entries. Works with ChatGPT, Claude, DeepSeek, and similar models.
+
+
 
 ## License
 
