@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+set -euo pipefail
+
+if [[ "$(uname -s)" == "Darwin" && "$(uname -m)" == "arm64" ]]; then
+  CURRENT_ARCH="$(arch)"
+  if [[ "$CURRENT_ARCH" != "arm64" ]]; then
+    exec /usr/bin/arch -arm64 "$0" "$@"
+  fi
+fi
+
+if [[ "${1:-}" == "-help" ]]; then
+  set -- --help "${@:2}"
+fi
+
+SCRIPT_PATH="${0:A}"
+SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" && pwd)"
+VENV_PYTHON="$SCRIPT_DIR/.venv/bin/python"
+
+if [[ ! -x "$VENV_PYTHON" ]]; then
+  /usr/bin/arch -arm64 python3 -m venv "$SCRIPT_DIR/.venv"
+fi
+
+if ! /usr/bin/arch -arm64 "$VENV_PYTHON" -c "import av; import faster_whisper" >/dev/null 2>&1; then
+  /usr/bin/arch -arm64 "$VENV_PYTHON" -m pip install -r "$SCRIPT_DIR/requirements.txt" >/dev/null
+fi
+
+exec /usr/bin/arch -arm64 "$VENV_PYTHON" "$SCRIPT_DIR/transcribe.py" "$@"

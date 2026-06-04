@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment and local config
+.env
+.env.*
+
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+
+# Private workflows
+private/
+workflow_state/
+workflow_runs/
+
+# Local caches
+.pytest_cache/
+.mypy_cache/
+
+# Docker / local overrides
+docker-compose.override.yml
