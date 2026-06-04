@@ -6,6 +6,25 @@
 
 ## 快速开始
 
+### 预编译二进制（无需安装 Python）
+
+从 [GitHub Releases](https://github.com/tonylawx/stt/releases) 下载对应平台的独立可执行文件，然后：
+
+```bash
+# macOS / Linux
+chmod +x ./stt-macos-arm64      # 或 stt-macos-x86_64 / stt-linux-x86_64
+./stt-macos-arm64 /absolute/path/to/video.mp4
+```
+
+```powershell
+# Windows (PowerShell)
+.\stt-windows-x86_64.exe C:\path	oideo.mp4
+```
+
+二进制文件自带所有依赖，无需安装 Python、pip 或虚拟环境。首次运行时会自动下载 Whisper 模型。
+
+### 从源码安装 (pip)
+
 ```bash
 # 1. 创建虚拟环境并安装依赖
 python3 -m venv .venv
@@ -30,7 +49,7 @@ python transcribe.py /absolute/path/to/video.mp4
 
 ## 环境要求
 
-- Python 3.10+
+- Python 3.10+（仅从源码安装时需要）
 - macOS、Linux 或 Windows
 
 依赖项见 `requirements.txt`：
@@ -44,6 +63,10 @@ python transcribe.py /absolute/path/to/video.mp4
 ## 使用方式
 
 ```bash
+# 预编译二进制
+./stt-<平台> /absolute/path/to/video.mp4 [选项]
+
+# 从源码
 python transcribe.py /absolute/path/to/video.mp4 [选项]
 ```
 
@@ -64,11 +87,11 @@ python transcribe.py /absolute/path/to/video.mp4 [选项]
 
 ### Apple Silicon (M1 / M2 / M3 / M4)
 
-Apple Silicon Mac 上默认使用 CPU + `int8` 量化推理，并自动调节线程数。启动脚本（`stt` 和 `transcribe.command`）会强制走 `arm64`，不会意外跑在 Rosetta 下。
+Apple Silicon Mac 请下载 `stt-macos-arm64`。默认使用 CPU + `int8` 量化推理，并自动调节线程数。启动脚本（`stt` 和 `transcribe.command`）会强制走 `arm64`，不会意外跑在 Rosetta 下。
 
 ```bash
 # 如需手动指定线程数
-python transcribe.py /absolute/path/to/video.mp4 --cpu-threads 8
+./stt-macos-arm64 /absolute/path/to/video.mp4 --cpu-threads 8
 ```
 
 ### 纯 CPU 环境
@@ -80,25 +103,25 @@ python transcribe.py /absolute/path/to/video.mp4 --cpu-threads 8
 自动检测语言：
 
 ```bash
-python transcribe.py /absolute/path/to/video.mp4
+./stt-<平台> /absolute/path/to/video.mp4
 ```
 
 强制指定语言：
 
 ```bash
-python transcribe.py /absolute/path/to/video.mp4 --language zh
+./stt-<平台> /absolute/path/to/video.mp4 --language zh
 ```
 
 选择更小的模型：
 
 ```bash
-python transcribe.py /absolute/path/to/video.mp4 --model base
+./stt-<平台> /absolute/path/to/video.mp4 --model base
 ```
 
 指定输出目录：
 
 ```bash
-python transcribe.py /absolute/path/to/video.mp4 --output-dir /path/to/output
+./stt-<平台> /absolute/path/to/video.mp4 --output-dir /path/to/output
 ```
 
 ## License

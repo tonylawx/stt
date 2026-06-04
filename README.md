@@ -6,6 +6,25 @@ A local, offline speech-to-text tool that transcribes video files (`.mp4`, `.mov
 
 ## Quick Start
 
+### Pre-built binary (no Python required)
+
+Grab the standalone binary for your platform from [GitHub Releases](https://github.com/tonylawx/stt/releases), then:
+
+```bash
+# macOS / Linux
+chmod +x ./stt-macos-arm64      # or stt-macos-x86_64 / stt-linux-x86_64
+./stt-macos-arm64 /path/to/video.mp4
+```
+
+```powershell
+# Windows (PowerShell)
+.\stt-windows-x86_64.exe C:\path	oideo.mp4
+```
+
+The binary bundles everything — no Python, no pip, no venv. The Whisper model is downloaded automatically on first run.
+
+### From source (pip)
+
 ```bash
 # 1. Create a virtual environment and install dependencies
 python3 -m venv .venv
@@ -30,7 +49,7 @@ After the run finishes, you will find `video.srt` and `video.txt` alongside the 
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.10+ (if installing from source)
 - macOS, Linux, or Windows
 
 Dependencies are listed in `requirements.txt`:
@@ -44,6 +63,10 @@ Dependencies are listed in `requirements.txt`:
 ## Usage
 
 ```bash
+# Pre-built binary
+./stt-<platform> /path/to/video.mp4 [options]
+
+# From source
 python transcribe.py /path/to/video.mp4 [options]
 ```
 
@@ -64,11 +87,11 @@ python transcribe.py /path/to/video.mp4 [options]
 
 ### Apple Silicon (M1 / M2 / M3 / M4)
 
-On Apple Silicon Macs the tool defaults to CPU + `int8` quantized inference with automatic thread tuning. The launcher scripts (`stt` and `transcribe.command`) force `arm64` so you never accidentally launch under Rosetta.
+On Apple Silicon Macs pick `stt-macos-arm64` from Releases. The tool defaults to CPU + `int8` quantized inference with automatic thread tuning. The launcher scripts (`stt` and `transcribe.command`) force `arm64` so you never accidentally launch under Rosetta.
 
 ```bash
 # Manual thread override if needed
-python transcribe.py /path/to/video.mp4 --cpu-threads 8
+./stt-macos-arm64 /path/to/video.mp4 --cpu-threads 8
 ```
 
 ### Without a GPU
@@ -80,25 +103,25 @@ The tool works fine CPU-only — it is just slower. The `base` or `small` models
 Auto-detect language:
 
 ```bash
-python transcribe.py /path/to/video.mp4
+./stt-<platform> /path/to/video.mp4
 ```
 
 Force a language:
 
 ```bash
-python transcribe.py /path/to/video.mp4 --language zh
+./stt-<platform> /path/to/video.mp4 --language zh
 ```
 
 Choose a smaller model:
 
 ```bash
-python transcribe.py /path/to/video.mp4 --model base
+./stt-<platform> /path/to/video.mp4 --model base
 ```
 
 Write output to a different directory:
 
 ```bash
-python transcribe.py /path/to/video.mp4 --output-dir /path/to/output
+./stt-<platform> /path/to/video.mp4 --output-dir /path/to/output
 ```
 
 ## License
