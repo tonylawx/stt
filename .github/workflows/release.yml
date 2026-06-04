@@ -49,16 +49,17 @@ jobs:
       - name: Package binary
         shell: bash
         run: |
-          ARCHIVE="${{ matrix.artifact }}.tar.gz"
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            ARCHIVE="${{ matrix.artifact }}.zip"
+            echo "archive=${{ matrix.artifact }}.zip" >> "$GITHUB_ENV"
             mv dist/stt.exe stt.exe
-            zip "$ARCHIVE" stt.exe
+            powershell Compress-Archive -Path stt.exe -DestinationPath "${{ matrix.artifact }}.zip"
+            echo "Packaged: $(ls -lh ${{ matrix.artifact }}.zip)"
           else
+            ARCHIVE="${{ matrix.artifact }}.tar.gz"
             tar -czf "$ARCHIVE" -C dist stt
+            echo "Packaged: $(ls -lh "$ARCHIVE")"
+            echo "archive=$ARCHIVE" >> "$GITHUB_ENV"
           fi
-          echo "Packaged: $(ls -lh "$ARCHIVE")"
-          echo "archive=$ARCHIVE" >> "$GITHUB_ENV"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
