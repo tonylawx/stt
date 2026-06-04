@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stt"
+version = "0.1.0"
+description = "Local offline speech-to-text: transcribe video to .srt / .txt with faster-whisper"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "tonylawx" }]
+keywords = ["whisper", "speech-to-text", "subtitle", "transcription", "offline"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Multimedia :: Video",
+]
+dependencies = [
+    "faster-whisper>=1.1.1,<2.0.0",
+    "ctranslate2>=4.7.2,<5.0.0",
+    "tqdm>=4.66.0,<5.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/tonylawx/stt"
+Repository = "https://github.com/tonylawx/stt"
+Issues = "https://github.com/tonylawx/stt/issues"
+
+[project.scripts]
+stt = "transcribe:main"
+
+[tool.setuptools]
+py-modules = ["transcribe"]

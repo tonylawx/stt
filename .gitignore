@@ -36,3 +36,4 @@ workflow_runs/
 
 # Docker / local overrides
 docker-compose.override.yml
+*.spec
